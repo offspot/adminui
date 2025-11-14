@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block head %}
+<style type="text/css">
+.content {
+}
+
+.config-options {
+}
+.cards {
+}
+.card {
+	width: 50%;
+	--bs-card-bg: #13121c;
+	--bs-card-border-color: #4f535e;
+	padding: 1rem;
+}
+
+.card:hover {
+	--bs-card-bg: #363651;
+	--bs-card-border-color: #47506b;
+	cursor: pointer;
+}
+
+h2 {
+	font-size: 1rem;
+}
+.card-title {
+	font-size: 1rem;
+}
+.card-text {
+	font-size: .8em;
+}
+.cards {
+	gap: 1em;
+}
+.notice {
+	font-size: .9em;
+}
+
+
+</style>
+{% endblock %}
+
+{% block content %}
+	<div class="content">
+		<div class="mb-5">
+			<h1>Kiwix Hotspot Admin Panel</h1>
+
+			<p>This interface allows you to configure parts of your Kiwix Hotspot.</p>
+			<p>Beware that while it's not possible to harm the device from here, given you have control over the Hotspot's content, be careful when <strong>deleting</strong>.</p>
+		</div>
+
+	  <div class="config-options row mb-5">
+		  <div class="col-12 col-md-4 col-xl-3">
+		  	<h2>Configuration options</h2>
+		  </div>
+		  <div class="col-12 offset-xl-1 col-md-8 d-flex flex-row cards">
+				<a href="{{ url_for('wifi_config') }}" class="card">
+						<h5 class="card-title">WiFi</h5>
+						<p class="card-text">Change the Hotspot's WiFi network settings.</p>
+				</a>
+
+				<a href="{{ url_for('optional_config') }}" class="card">
+						<h5 class="card-title">Optional Features</h5>
+						<p class="card-text">Enable/disable additional features.</p>
+				</a>
+  	  </div>
+
+		</div>
+
+		<div class="other-options row">
+
+			<div class="col-12 col-md-4 col-xl-3">
+				<h2>Configuration options</h2>
+			</div>
+
+			<div class="col-12 offset-xl-1 col-md-8 d-flex flex-row cards mb-3">
+				<p class="notice">These links will take you elsewhere on the Hotspot and you may have to login again.</p>
+			</div>
+
+			<div class="col-12 offset-md-4 offset-xl-4 col-md-8 d-flex flex-row cards mb-3">
+				<a href="http://clock.{{ ctx.fqdn }}/" class="card" target="_blank">
+					<h5 class="card-title">Clock</h5>
+					<p class="card-text">Update date and time as seen by the Hotspot.</p>
+				</a>
+
+				<a href="http://zim-manager.{{ ctx.fqdn }}/" class="card" target="_blank">
+					<h5 class="card-title">Manage ZIM files</h5>
+					<p class="card-text">Add or remove content (ZIM files).</p>
+				</a>
+			</div>
+
+			<div class="col-12 offset-md-4 offset-xl-4 col-md-8 d-flex flex-row cards">
+				<a href="http://resources.{{ ctx.fqdn }}/admin/?p=" class="card" target="_blank">
+					<h5 class="card-title">Manage File Manager</h5>
+					<p class="card-text">Add, move, delete files visible in File Manager app.</p>
+				</a>
+
+				<a href="http://metrics.{{ ctx.fqdn }}/" class="card" target="_blank">
+					<h5 class="card-title">Access Metrics</h5>
+					<p class="card-text">See your Hotspot's usage statistics.</p>
+				</a>
+			</div>
+
+		</div>
+	</div>
+	</div>
+
+{% endblock %}

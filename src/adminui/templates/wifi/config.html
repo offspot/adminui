@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block head %}
+<style type="text/css">
+
+</style>
+{% endblock %}
+
+{% block content %}
+    <div class="content">
+      <h1 class="">Configuring WiFi</h1>
+      <p>The WiFi network is at the heart of the Hotspot, it is how Hotspot <em>clients</em> access it.
+      <br />Changes here require a restart of the Hotspot and will disconnect you from it.</p>
+
+      <form method="POST" class="needs-validation" novalidate>
+        {% if errors.all %}<p class="all-error">{{ errors.all }}</div>{% endif %}
+        <div class="row mb-3">
+          <div class="col-12 col-md-2">
+            <label for="profile">Profile</label>
+          </div>
+
+          <div class="col-12 col-md-10">
+            <div class="field-row mb-2">
+              <select name="profile" class="form-select" >
+                <option value="perf" {% if form.profile == "perf" %}selected="selected"{% endif %}>Performance</option>
+                <option value="coverage" {% if form.profile == "coverage" %}selected="selected"{% endif %}>Coverage</option>
+              </select>
+              <div class="invalid-feedback">{% if errors.profile %}{{ errors.profile }}{% else %}Only Performance and Coverage available.{% endif %}</div>
+            </div>
+
+            <div class="feature-doc">
+              <p>You can configure your network in two different ways that optimizes for different objectives:</p>
+                <ul>
+                  <li><strong>Performance</strong> means faster download/upload speeds and more robust connection but only works within an approximately 10m radius from the device.</li>
+                  <li><strong>Coverage</strong> means larger coverage at the expense of speed and robustness.</li>
+                </ul>
+                <p>Use <strong>Performance</strong> if it works for you. If you need to connect from further away, switch to <strong>Coverage</strong>.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-12 col-md-2">
+            <label for="ssid">SSID</label>
+          </div>
+
+          <div class="col-12 col-md-10">
+            <div class="field-row mb-2">
+              <!-- ^[^!#;+\]/"\t][^+\]/"\t]{0,31}$ -->
+              <input class="form-control {% if errors.ssid %} is-invalid{% endif %}" pattern='^[^!#;+\]\/"\t][^+\]\/"\t]{0,31}$' required minlength="1" maxlength="31"  type="text" name="ssid" placeholder="My Network name" value="{{ form.ssid }}" />
+              <div class="invalid-feedback">{% if errors.ssid %}{{ errors.ssid }}{% else %}Max 32 chars. Can't start with a symbol. <code>+</code>, <code>]</code>, <code>/</code>, <code>"</code>, <code>\t</code> prohibited.{% endif %}</div>
+            </div>
+
+            <div class="feature-doc">
+              <p>That's the name of your network. It must be at most 32 chars long.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-12 col-md-2">
+            <label for="passphrase">Open network</label>
+          </div>
+          <div class="col-12 col-md-10">
+            <div class="field-row mb-2">
+              <div class="form-check form-switch">
+                <input id="wifi_open_switch" class="form-check-input" type="checkbox" value="yes" role="switch" name="open"{% if form.open %} checked{% endif %}>
+              </div>
+            </div>
+            <div class="invalid-feedback">{% if errors.open %}{{ errors.open }}{% else %}Either open or not.{% endif %}</div>
+            <div class="feature-doc">
+              <p>Your network can be <em>Open</em> (anybody can join it) or ask <em>clients</em> to supply a passphrase to join (only the first time).</p>
+              <p>Your device has a fixed WiFi <em>clients</em> capacity so it's a good idea to set a passphrase if you want to restrict its access.</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="passphrase-block" class="row mb-3{%if form.open %} d-none{% endif %}">
+          <div class="col-12 col-md-2">
+            <label for="passphrase">Passphrase</label>
+          </div>
+          <div class="col-12 col-md-10">
+            <div class="field-row mb-2">
+              <input class="form-control" id="passphrase-input" type="text" name="passphrase" pattern="^[\u0020-\u007e]{8,63}$" {% if not form.open %} required{% endif %} minlength="8" maxlength="63" value="{{ form.passphrase or '' }}" />
+              <div class="invalid-feedback">{% if errors.passphrase %}{{ errors.passphrase }}{% else %}Must be 8 to 63 chars long. Common latin chars and symbols.{% endif %}</div>
+            </div>
+            <div class="feature-doc">
+              <p>Passphrase must be at least 8 latin characters long</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-10 offset-md-2">
+          <input class="btn btn-primary" type="submit" value="Save changes" /> <input type="reset" class="btn btn-secondary" value="Reset" />
+        </div>
+
+      </form>
+    </div>
+{% endblock %}
+
+
+{% block javascript %}
+<script type="text/javascript">
+  function hidePassphraseOnOpenWifi() {
+    let className = 'd-none';
+    let block = document.getElementById('passphrase-block');
+    let field = block.querySelector('input');
+    const is_open = document.querySelector('#wifi_open_switch:checked') !== null;
+    if (is_open) {
+      field.removeAttribute('required');
+      addClass(block, className);
+    } else {
+      field.setAttribute('required', 'required');
+      removeClass(block, className);
+    }
+  }
+  // function onResetButtonClicked(el, evt) {
+  //   evt.preventDefault();
+  //   el.form.reset();
+  //   hidePassphraseOnOpenWifi();
+  //   const fields = el.form.querySelectorAll('.changed');
+  //   Array.from(fields).forEach(field => {
+  //     removeClass(field, 'changed');
+  //   });
+  // }
+  // function onChangedField(el, evt) {
+  //   addClass(el, 'changed')
+  // }
+  // function manuallyValidateFormOnSubmit(form, event) {
+  //   if (!form.checkValidity()) {
+  //     event.preventDefault()
+  //     event.stopPropagation()
+  //   }
+  //   addClass(form, 'was-validated');
+  // }
+  function run() {
+    live('form *', 'change', onChangedField);
+    live('form', 'change', hidePassphraseOnOpenWifi);
+    live('form input[type=reset]', 'click', onResetButtonClicked);
+    live('form.needs-validation', 'submit', manuallyValidateFormOnSubmit);
+  }
+</script>
+{% endblock %}

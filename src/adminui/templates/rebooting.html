@@ -1,0 +1,20 @@
+{% extends "raw_base.html" %}
+{% block theme %}light{% endblock %}
+{% block head %}
+<style type="text/css">
+main {
+  max-width: 330px;
+}
+.alert h1 {
+    font-size: 1.5em;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="alert alert-primary" role="alert">
+    <h1>Hotspot is restarting…</h1>
+    <p>Your Hotspot device should be restarting now. You are likely already disconnected.</p>
+</div>
+{% endblock %}
+

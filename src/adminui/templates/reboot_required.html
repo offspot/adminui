@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block theme %}light{% endblock %}
+{% block head %}
+<style type="text/css">
+.reboot-popup {
+  background-color: white;
+  border-radius: .4em;
+  padding: 2em;
+  font-size: .8em;
+}
+.reboot-popup h1 {
+  font-size: 1.5em;
+}
+.reboot-popup h2 {
+  font-size: 1.2em;
+}
+
+.bd-callout-warning {
+  --bd-callout-color: var(--bs-warning-text-emphasis);
+  --bd-callout-bg: var(--bs-warning-bg-subtle);
+  --bd-callout-border: var(--bs-warning-border-subtle);
+}
+.bd-callout {
+  --bs-link-color-rgb: var(--bd-callout-link);
+  --bs-code-color: var(--bd-callout-code-color);
+  padding: 1.25rem;
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  color: var(--bd-callout-color, inherit);
+  background-color: var(--bd-callout-bg, var(--bs-gray-100));
+  border-left: .25rem solid var(--bd-callout-border, var(--bs-gray-300));
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="reboot-popup">
+    <h1>Changes recorded!</h1>
+    <p>Your changes have been recorded and <strong>will be applied upon next reboot</strong> of the Hotspot.</p>
+    <h2 class="mb-3">Do you want to restart the Hotspot now?</h2>
+    <form action="{{ url_for('restart') }}" method="POST" class="mb-3 text-center">
+      <a class="btn btn-secondary mb-1 mb-md-0" href="{{ url_for('logout') }}">Restart later (back to Hotspot)</a>
+      <button class="btn btn-danger mb-1 mb-md-0 ms-md-2">Restart now <i class="fa-solid fa-power-off"></i></button>
+    </form>
+    <p class="bd-callout bd-callout-warning">
+    Restarting now means you'll be disconnected from the Hotspot, as well as any other client.
+    <br />There is no harm in restarting later. Hotspot continues to function without the changes.</p>
+</div>
+{% endblock %}
+

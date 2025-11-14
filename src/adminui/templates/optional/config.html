@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block head %}
+<style type="text/css">
+/* form {
+  margin-top: 1em;
+}
+.feature-row {
+  display: inline-flex;
+  margin-bottom: 2em;
+}
+.feature-field {
+  width: 30%;
+  padding-right: 1em;
+}
+.feature-doc {
+  width: 70%;
+} */
+</style>
+{% endblock %}
+
+{% block content %}
+  <div class="content">
+  <h1 class="">Optional Features</h1>
+  <p>Some capabilities are not enabled by default because they're not intended to be run at all time, because they create security risks, or because they consume additional resources without a permanent need.</p>
+
+  <form method="POST" class="needs-validation" novalidate>
+    {% if errors.all %}<p class="all-error">{{ errors.all }}</div>{% endif %}
+
+    <div class="row mb-3">
+      <div class="col-12 col-md-2">
+        <label for="profile">SSH Service</label>
+      </div>
+      <div class="col-12 col-md-10">
+        <div class="field-row mb-2">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" value="yes" role="switch" name="sshd"{% if form.sshd %} checked{% endif %}>
+          </div>
+          <div class="invalid-feedback">{% if errors.profile %}{{ errors.profile }}{% else %}Either enabled or disabled.{% endif %}</div>
+        </div>
+        <div class="feature-doc">
+          <p><strong>SSH</strong> is a Secure Shell that is used to connect to the Hotspot's terminal console from another computer on the network.</p>
+          <p>The credentials to log-in on the console are <code>user</code>/<code>raspberry</code>.</p>
+          <p class="alert alert-warning">Unless you know exactly what you're doing, don't turn this on as it poses a great security risk.<br />If you do, change authentication and/or turn it off as soon as you don't need it anymore.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-12 col-md-2">
+        <label for="profile">Kiosk</label>
+      </div>
+      <div class="col-12 col-md-10">
+        <div class="field-row mb-2">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" value="yes" role="switch" name="sshd"{% if form.sshd %} checked{% endif %} disabled>
+          </div>
+          <div class="invalid-feedback">{% if errors.profile %}{{ errors.profile }}{% else %}Either enabled or disabled.{% endif %}</div>
+        </div>
+        <div class="feature-doc">
+          <p>Allows using the Hotspot device as a <em>client</em> (in addition to its server mode) by plugging it to a screen, keyboard and mouse.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-10 offset-md-2">
+      <input class="btn btn-primary" type="submit" value="Save changes" /> <input type="reset" class="btn btn-secondary" value="Reset" />
+    </div>
+
+      </form>
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript">
+  function run() {
+    live('form *', 'change', onChangedField);
+    live('form input[type=reset]', 'click', onResetButtonClicked);
+    live('form.needs-validation', 'submit', manuallyValidateFormOnSubmit);
+  }
+</script>
+{% endblock %}

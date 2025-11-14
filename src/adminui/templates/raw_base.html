@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="{% block theme %}dark{% endblock %}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>{% block title %}Kiwix Hotspot Admin{% endblock %}</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', path='branding/square-logo-light.png') }}" media="(prefers-color-scheme:no-preference)">
+    <link rel="stylesheet" href="{{ url_for('static', path='fontawesome-free-7.1.0-web/css/fontawesome.css') }}" >
+    <link rel="stylesheet" href="{{ url_for('static', path='fontawesome-free-7.1.0-web/css/solid.css') }}" >
+    <link rel="stylesheet" href="{{ url_for('static', path='fontawesome-free-7.1.0-web/css/brands.css') }}" >
+    <link href="{{ url_for('static', path='bootstrap-5.3.8-dist/css/bootstrap.min.css') }}" rel="stylesheet">
+    <style type="text/css">
+        body {
+            background: #161C32;
+            background: linear-gradient(135deg,rgba(22, 28, 50, 1) 0%, rgba(14, 15, 20, 1) 100%);
+        }
+        html,
+        body {
+          height: 100%;
+        }
+    </style>
+    {% block basehead %}{% endblock %}
+    {% block head %}{% endblock %}
+  </head>
+  <body class="{% block bodyclass %}d-flex align-items-center py-4 bg-body-tertiary{% endblock %}">
+    {% block body %}
+    <main class="w-100 m-auto">
+        {% block content %}{% endblock %}
+    </main>
+    {% endblock %}
+    <script src="{{ url_for('static', path='bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', path='admin-dashboard.js') }}"></script>
+    {% block javascript %}
+    <script type="text/javascript">
+        function run() {}
+    </script>
+    {% endblock %}
+    <script type="text/javascript">
+        if (document.readyState!='loading') run(); // already loaded
+        else if (document.addEventListener) document.addEventListener('DOMContentLoaded', run); // modern browsers
+        else document.attachEvent('onreadystatechange', function() { if (document.readyState=='complete') run();}); // IE <= 8
+    </script>
+  </body>
+</html>

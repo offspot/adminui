@@ -1,0 +1,31 @@
+name: Publish adminui Image
+
+on:
+  push:
+    branches:
+      - 'main'
+    tags:
+      - '*'
+
+jobs:
+  dashboard:
+    name: Publish adminui Image
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - name: Publish dashboard Image
+        uses: openzim/docker-publish-action@v10
+        with:
+          image-name: offspot/adminui
+          on-master: dev
+          build-args:
+            VERSION={tag}
+          tag-pattern: /^([0-9.]+)$/
+          restrict-to: offspot/adminui
+          platforms: |
+            linux/amd64
+            linux/arm64
+          registries: ghcr.io
+          credentials:
+            GHCRIO_USERNAME=${{ secrets.GHCR_USERNAME }}
+            GHCRIO_TOKEN=${{ secrets.GHCR_TOKEN }}

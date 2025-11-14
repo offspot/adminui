@@ -1,0 +1,85 @@
+{% extends "raw_base.html" %}
+
+{% block theme %}light{% endblock %}
+{% block title %}Sign into Kiwix Admin{% endblock %}
+
+{% block head %}
+<style type="text/css">
+		main header {
+			margin-bottom: .5em;
+		}
+		main header img {
+			object-fit: scale-down;
+			width: 11rem;
+			height: 6rem;
+			max-width: 100%;
+			display: block;
+			margin: auto;
+		}
+
+		main {
+		  max-width: 330px;
+		}
+
+		.form-signin {
+			background: white;
+			border-radius: .4em;
+			padding: 1rem;
+		}
+
+		main label {
+			color: #666666;
+			font-size: .9rem;
+		}
+
+		main input[type="submit"] {
+			--bs-btn-color: #fff;
+			--bs-btn-bg: #e69841;
+			--bs-btn-border-color: #e69841;
+			--bs-btn-hover-color: #fff;
+			--bs-btn-hover-bg: #e8881b;
+			--bs-btn-hover-border-color: #e3820e;
+			--bs-btn-focus-shadow-rgb: 255,174,65;
+			--bs-btn-active-color: #fff;
+			--bs-btn-active-bg: #e3820e;
+			--bs-btn-active-border-color: #e37d02;
+			--bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+			--bs-btn-disabled-color: #fff;
+			--bs-btn-disabled-bg: #e69841;
+			--bs-btn-disabled-border-color: #e69841;
+		}
+
+		a {
+			--bs-link-color: #e69841;
+			--bs-link-color-rgb: 230,152,65;
+			--bs-link-hover-color: #e3820e;
+			--bs-link-hover-color-rgb: 227,130,14;
+			text-decoration: none;
+		}
+	</style>
+	{% endblock %}
+
+	{% block content %}
+		<div class="form-signin">
+			<header>
+				<img
+					src="{{ url_for('static', path='branding/horizontal-logo-light.png') }}"
+					class="object-scale-down w-[19rem] h-[6rem] object-left pt-[1.2rem] pb-[1.2rem]" />
+			</header>
+			<form method="POST" class="">
+					<div class="mb-3">
+						<label class="form-label" for="username">Username</label>
+						<input type="text"  class="form-control{% if is_incorrect %} is-invalid{% endif %}" name="username" placeholder="Usually “admin”" />
+					</div>
+					<div class="mb-3">
+						<label class="form-label" for="password">Password</label>
+						<input type="password" class="form-control{% if is_incorrect %} is-invalid{% endif %}" name="password" aria-describedby="credentialsFeedback">
+						{% if is_incorrect and message_content %}<div id="credentialsFeedback" class="invalid-feedback">{{ message_content }}</div>{% endif %}
+					</div>
+					<div class="d-flex flex-row-reverse">
+						<input type="submit" class="btn btn-primary" value="Sign-in" />
+					</div>
+			</form>
+		</div>
+		<div class="mt-1 mb-1 p-3"><a href="http://{{ ctx.fqdn }}"><i class="fa-solid fa-arrow-left"></i> Return to the Hotspot</a></div>
+{% endblock %}
