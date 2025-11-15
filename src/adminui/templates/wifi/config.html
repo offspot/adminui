@@ -25,7 +25,7 @@
                 <option value="perf" {% if form.profile == "perf" %}selected="selected"{% endif %}>Performance</option>
                 <option value="coverage" {% if form.profile == "coverage" %}selected="selected"{% endif %}>Coverage</option>
               </select>
-              <div class="invalid-feedback">{% if errors.profile %}{{ errors.profile }}{% else %}Only Performance and Coverage available.{% endif %}</div>
+              <div class="invalid-feedback {% if errors.profile %}display-until-validated{% endif %}">{% if errors.profile %}{{ errors.profile }}{% else %}Only Performance and Coverage available.{% endif %}</div>
             </div>
 
             <div class="feature-doc">
@@ -48,7 +48,7 @@
             <div class="field-row mb-2">
               <!-- ^[^!#;+\]/"\t][^+\]/"\t]{0,31}$ -->
               <input class="form-control {% if errors.ssid %} is-invalid{% endif %}" pattern='^[^!#;+\]\/"\t][^+\]\/"\t]{0,31}$' required minlength="1" maxlength="31"  type="text" name="ssid" placeholder="My Network name" value="{{ form.ssid }}" />
-              <div class="invalid-feedback">{% if errors.ssid %}{{ errors.ssid }}{% else %}Max 32 chars. Can't start with a symbol. <code>+</code>, <code>]</code>, <code>/</code>, <code>"</code>, <code>\t</code> prohibited.{% endif %}</div>
+              <div class="invalid-feedback {% if errors.ssid %}display-until-validated{% endif %}">{% if errors.ssid %}{{ errors.ssid }}{% else %}Max 32 chars. Can't start with a symbol. <code>+</code>, <code>]</code>, <code>/</code>, <code>"</code>, <code>\t</code> prohibited.{% endif %}</div>
             </div>
 
             <div class="feature-doc">
@@ -67,7 +67,7 @@
                 <input id="wifi_open_switch" class="form-check-input" type="checkbox" value="yes" role="switch" name="open"{% if form.open %} checked{% endif %}>
               </div>
             </div>
-            <div class="invalid-feedback">{% if errors.open %}{{ errors.open }}{% else %}Either open or not.{% endif %}</div>
+            <div class="invalid-feedback {% if errors.open %}display-until-validated{% endif %}">{% if errors.open %}{{ errors.open }}{% else %}Either open or not.{% endif %}</div>
             <div class="feature-doc">
               <p>Your network can be <em>Open</em> (anybody can join it) or ask <em>clients</em> to supply a passphrase to join (only the first time).</p>
               <p>Your device has a fixed WiFi <em>clients</em> capacity so it's a good idea to set a passphrase if you want to restrict its access.</p>
@@ -82,7 +82,7 @@
           <div class="col-12 col-md-10">
             <div class="field-row mb-2">
               <input class="form-control" id="passphrase-input" type="text" name="passphrase" pattern="^[\u0020-\u007e]{8,63}$" {% if not form.open %} required{% endif %} minlength="8" maxlength="63" value="{{ form.passphrase or '' }}" />
-              <div class="invalid-feedback">{% if errors.passphrase %}{{ errors.passphrase }}{% else %}Must be 8 to 63 chars long. Common latin chars and symbols.{% endif %}</div>
+              <div class="invalid-feedback {% if errors.passphrase %}display-until-validated{% endif %}">{% if errors.passphrase %}{{ errors.passphrase }}{% else %}Must be 8 to 63 chars long. Common latin chars and symbols.{% endif %}</div>
             </div>
             <div class="feature-doc">
               <p>Passphrase must be at least 8 latin characters long</p>

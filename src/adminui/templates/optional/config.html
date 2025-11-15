@@ -36,7 +36,7 @@
           <div class="form-check form-switch">
             <input class="form-check-input" type="checkbox" value="yes" role="switch" name="sshd"{% if form.sshd %} checked{% endif %}>
           </div>
-          <div class="invalid-feedback">{% if errors.profile %}{{ errors.profile }}{% else %}Either enabled or disabled.{% endif %}</div>
+          <div class="invalid-feedback {% if errors.ssh %}display-until-validated{% endif %}">{% if errors.ssh %}{{ errors.ssh }}{% else %}Either enabled or disabled.{% endif %}</div>
         </div>
         <div class="feature-doc">
           <p><strong>SSH</strong> is a Secure Shell that is used to connect to the Hotspot's terminal console from another computer on the network.</p>
@@ -55,7 +55,7 @@
           <div class="form-check form-switch">
             <input class="form-check-input" type="checkbox" value="yes" role="switch" name="sshd"{% if form.sshd %} checked{% endif %} disabled>
           </div>
-          <div class="invalid-feedback">{% if errors.profile %}{{ errors.profile }}{% else %}Either enabled or disabled.{% endif %}</div>
+          <div class="invalid-feedback {% if errors.kiosk %}display-until-validated{% endif %}">{% if errors.kiosk %}{{ errors.kiosk }}{% else %}Either enabled or disabled.{% endif %}</div>
         </div>
         <div class="feature-doc">
           <p>Allows using the Hotspot device as a <em>client</em> (in addition to its server mode) by plugging it to a screen, keyboard and mouse.</p>

@@ -71,9 +71,9 @@ function onChangedField(el, evt) {
 addClass(el, 'changed')
 }
 function manuallyValidateFormOnSubmit(form, event) {
-if (!form.checkValidity()) {
-  event.preventDefault()
-  event.stopPropagation()
-}
-addClass(form, 'was-validated');
+  if (!form.checkValidity()) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+  addClass(form, 'was-validated');
 }

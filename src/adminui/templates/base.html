@@ -74,6 +74,14 @@
 			border-color: var(--bs-warning-border-subtle) !important;
 		}
 
+		/* form mode, display backend errors until frontend check validates */
+		.display-until-validated {
+		  display: block;
+		}
+		form.was-validated .display-until-validated {
+		  display: none;
+		}
+
 		/* form-mode, display form-wide error */
 		.all-error {
 			padding: .7rem;
@@ -105,7 +113,7 @@
 			<header>
 				<div class="container-sm row m-auto">
 					<div class="offset-md-2 col-md-8">
-						<a class="navbar-brand" href="{{ url_for('home') }}"><img src="http://localhost/branding/horizontal-logo-light.png" /></a>
+						<a class="navbar-brand" href="{{ url_for('home') }}"><img src="{{ url_for('static', path='branding/horizontal-logo-light.png') }}" /></a>
 					</div>
 				</div>
 			</header>
