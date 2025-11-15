@@ -114,7 +114,6 @@ def prepare_context():
     try:
         sshd_enabled = bridge.request_service_enabled("ssh").is_enabled
     except Exception:
-        # raise
         sshd_enabled = False
 
     Context.setup(

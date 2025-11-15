@@ -2,7 +2,11 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, Form, Request, Response
 from fastapi.templating import Jinja2Templates
-from offspot_runtime.checks import is_valid_ssid, is_valid_wpa2_passphrase
+from offspot_runtime.checks import (
+    is_valid_profile,
+    is_valid_ssid,
+    is_valid_wpa2_passphrase,
+)
 from pydantic.main import BaseModel
 
 from adminui.auth.session import Session
@@ -39,7 +43,9 @@ class WifiFormData(BaseModel):
 
     def validate(self) -> ValidateResult:
         errors = {}
-        # profile validation requires offspot-config update
+        valid = is_valid_profile(self.profile)
+        if not valid:
+            errors["profile"] = valid.help_text
         valid = is_valid_ssid(self.ssid)
         if not valid:
             errors["ssid"] = valid.help_text
