@@ -13,7 +13,7 @@ dependencies = [
     "fastapi-login==1.10.3",
     "httpx==0.28.1", # should be in fastapi
     # "offspot-config==2.7.1",
-    "offspot-config @ https://github.com/offspot/offspot-config/archive/refs/heads/wifi.zip",
+    "offspot-config @ https://github.com/offspot/offspot-config/archive/refs/heads/main.zip",
 ]
 license = {text = "GPL-3.0-or-later"}
 classifiers = [
