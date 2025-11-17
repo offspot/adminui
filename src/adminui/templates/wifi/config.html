@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% block title %}WiFi Settings – Admin Panel – Kiwix Hotspot{% endblock %}
+{% block pagetitle %}WiFi Settings{% endblock %}
 
 {% block content %}
     <div class="content">
-      <h1 class="">Configuring WiFi</h1>
       <p>The WiFi network is at the heart of the Hotspot, it is how Hotspot <em>clients</em> access it.
       <br />Changes here require a restart of the Hotspot and will disconnect you from it.</p>
 
       <form method="POST" class="needs-validation" novalidate>
-        {% if errors.all %}<p class="all-error">{{ errors.all }}</div>{% endif %}
+        {% if errors.all %}<p class="all-error">{{ errors.all }}</p>{% endif %}
         <div class="row mb-3">
           <div class="col-12 col-md-2">
             <label for="profile">Profile</label>

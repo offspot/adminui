@@ -47,6 +47,9 @@
 		.admin-bar nav {
 			padding:0;
 		}
+		.admin-bar nav .disconnect-link {
+			font-size: .8em;
+		}
 		.block-content {
 			padding: 2em 0 2em 0;
 		}
@@ -67,11 +70,15 @@
 			font-size: .8em;
 		}
 
+		.card {
+			border-radius: 1em;
+		}
+
 		/* form mode, highlight changed fields */
 		select.changed, input.changed {
-			color: var(--bs-warning-text-emphasis) !important;
-			background-color: var(--bs-warning-bg-subtle) !important;
-			border-color: var(--bs-warning-border-subtle) !important;
+			color: #aabaff;
+			background-color: #414a70;
+			border-color: #aabaff;
 		}
 
 		/* form mode, display backend errors until frontend check validates */
@@ -120,10 +127,10 @@
 			<div class="admin-bar">
 				<div class="container-sm row m-auto">
 					<nav class="col-8 offset-lg-2 col-lg-6">
-						<a href="{{ url_for('home') }}">Administration Panel</a>
+						<a href="{{ url_for('home') }}">{% block pagetitle %}Administration Panel{% endblock %}</a>
 					</nav>
 					<nav class="col-4 col-lg-2 text-end">
-						<a title="Disconnect and return to Hotspot" href="{{ url_for('logout') }}"><span class="d-none d-sm-inline">Disconnect </span><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+						<a class="disconnect-link" title="Disconnect and return to Hotspot" href="{{ url_for('logout') }}"><span class="d-none d-sm-inline">Disconnect </span><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
 					</nav>
 				</div>
 			</div>

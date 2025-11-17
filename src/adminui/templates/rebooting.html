@@ -5,7 +5,15 @@
 {% block head %}
 <style type="text/css">
 main {
-  max-width: 330px;
+  max-width: 500px;
+}
+.alert {
+  padding: 2em;
+  border-radius: 1em;
+}
+.alert p:last-child {
+  padding-bottom: 0;
+  margin-bottom: .5rem;
 }
 .alert h1 {
     font-size: 1.5em;
@@ -15,8 +23,8 @@ main {
 
 {% block content %}
 <div class="alert alert-primary" role="alert">
-    <h1>Hotspot is rebooting…</h1>
-    <p>Your Hotspot device should be rebooting now. You are likely already disconnected.</p>
+    <h1>Your Kiwix Hotspot is rebooting…</h1>
+    <p>Your device should be rebooting right now and you are likely already disconnected.</p>
 </div>
 {% endblock %}
 

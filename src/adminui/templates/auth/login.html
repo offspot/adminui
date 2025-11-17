@@ -23,7 +23,7 @@
 
 		.form-signin {
 			background: white;
-			border-radius: .4em;
+			border-radius: 1em;
 			padding: 1rem;
 		}
 
@@ -34,10 +34,10 @@
 
 		main input[type="submit"] {
 			--bs-btn-color: #fff;
-			--bs-btn-bg: #e69841;
+			--bs-btn-bg: #e8881b;
 			--bs-btn-border-color: #e69841;
 			--bs-btn-hover-color: #fff;
-			--bs-btn-hover-bg: #e8881b;
+			--bs-btn-hover-bg: #e69841;
 			--bs-btn-hover-border-color: #e3820e;
 			--bs-btn-focus-shadow-rgb: 255,174,65;
 			--bs-btn-active-color: #fff;
@@ -50,8 +50,8 @@
 		}
 
 		a {
-			--bs-link-color: #e69841;
-			--bs-link-color-rgb: 230,152,65;
+			--bs-link-color: #ffffff;
+			--bs-link-color-rgb: 255,255,255;
 			--bs-link-hover-color: #e3820e;
 			--bs-link-hover-color-rgb: 227,130,14;
 			text-decoration: none;
@@ -81,5 +81,5 @@
 					</div>
 			</form>
 		</div>
-		<div class="mt-1 mb-1 p-3"><a href="http://{{ ctx.fqdn }}"><i class="fa-solid fa-arrow-left"></i> Return to the Hotspot</a></div>
+		<div class="mt-1 mb-1 p-3"><a class="returnlink" href="http://{{ ctx.fqdn }}"><i class="fa-solid fa-arrow-left"></i> Return to the Hotspot</a></div>
 {% endblock %}

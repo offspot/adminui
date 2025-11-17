@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% block title %}Optional Features – Admin Panel – Kiwix Hotspot{% endblock %}
+{% block pagetitle %}Optional Features{% endblock %}
 
 {% block content %}
   <div class="content">
-  <h1 class="">Optional Features</h1>
   <p>Some capabilities are not enabled by default because they're not intended to be run at all time, because they create security risks, or because they consume additional resources without a permanent need.</p>
 
   <form method="POST" class="needs-validation" novalidate>
-    {% if errors.all %}<p class="all-error">{{ errors.all }}</div>{% endif %}
+    {% if errors.all %}<p class="all-error">{{ errors.all }}</p>{% endif %}
 
     <div class="row mb-3">
       <div class="col-12 col-md-2">

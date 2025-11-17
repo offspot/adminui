@@ -7,15 +7,25 @@
 <style type="text/css">
 .reboot-popup {
   background-color: white;
-  border-radius: .4em;
-  padding: 2em;
-  font-size: .8em;
+  border-radius: 1em;
+  padding: 3em 2em 2em 2em;
+  max-width: 500px;
+  margin: auto;
 }
-.reboot-popup h1 {
-  font-size: 1.5em;
+.reboot-popup form {
+  margin-top: 1em;
+  margin-bottom: 3em;
+}
+.reboot-popup h1, .reboot-popup h2 {
+  font-size: 1.1em;
+  margin-bottom: 1.5em;
+}
+.reboot-popup p {
+  font-size: 1em;
 }
 .reboot-popup h2 {
-  font-size: 1.2em;
+  margin-top: 2em;
+
 }
 
 .bd-callout-warning {
@@ -27,8 +37,6 @@
   --bs-link-color-rgb: var(--bd-callout-link);
   --bs-code-color: var(--bd-callout-code-color);
   padding: 1.25rem;
-  margin-top: 1.25rem;
-  margin-bottom: 1.25rem;
   color: var(--bd-callout-color, inherit);
   background-color: var(--bd-callout-bg, var(--bs-gray-100));
   border-left: .25rem solid var(--bd-callout-border, var(--bs-gray-300));
@@ -38,16 +46,15 @@
 
 {% block content %}
 <div class="reboot-popup">
-    <h1>Changes recorded!</h1>
-    <p>Your changes have been recorded and <strong>will be applied upon next reboot</strong> of the Hotspot.</p>
-    <h2 class="mb-3">Do you want to restart the Hotspot now?</h2>
-    <form action="{{ url_for('restart') }}" method="POST" class="mb-3 text-center">
-      <a class="btn btn-secondary mb-1 mb-md-0" href="{{ url_for('logout') }}">Restart later (back to Hotspot)</a>
+    <h1>Your changes have been saved.</h1>
+    <p>Those <strong>will be applied upon next restart</strong> of the device.</p>
+    <h2 class="text-center">Do you want to restart the device now?</h2>
+    <form action="{{ url_for('restart') }}" method="POST" class="text-center">
+      <a class="btn btn-secondary mb-1 mb-md-0" href="{{ url_for('logout') }}">Restart later (back to Dashboard)</a>
       <button class="btn btn-danger mb-1 mb-md-0 ms-md-2">Restart now <i class="fa-solid fa-power-off"></i></button>
     </form>
     <p class="bd-callout bd-callout-warning">
-    Restarting now means you'll be disconnected from the Hotspot, as well as any other client.
-    <br />There is no harm in restarting later. Hotspot continues to function without the changes.</p>
+    Restarting now means you'll be disconnected from the device, as well as any other client. There is no harm in restarting later. Kiwix Hotspot continues to function without the changes.</p>
 </div>
 {% endblock %}
 
