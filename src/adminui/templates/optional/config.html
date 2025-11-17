@@ -4,7 +4,8 @@
 
 {% block content %}
   <div class="content">
-  <p>Some capabilities are not enabled by default because they're not intended to be run at all time, because they create security risks, or because they consume additional resources without a permanent need.</p>
+  <p class="col-lg-8">Some capabilities are not enabled by default because they're not intended to be run at all time, because they create security risks, or because they consume additional resources without a permanent need.</p>
+  <p class="col-lg-8">Changes here require a restart of the device and will disconnect you from it.</p>
 
   <form method="POST" class="needs-validation" novalidate>
     {% if errors.all %}<p class="all-error">{{ errors.all }}</p>{% endif %}
@@ -35,7 +36,7 @@
       <div class="col-12 col-md-10">
         <div class="field-row mb-2">
           <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" value="yes" role="switch" name="sshd"{% if form.sshd %} checked{% endif %} disabled>
+            <input class="form-check-input" type="checkbox" value="yes" role="switch" name="sshd"{% if form.kiosk %} checked{% endif %} disabled>
           </div>
           <div class="invalid-feedback {% if errors.kiosk %}display-until-validated{% endif %}">{% if errors.kiosk %}{{ errors.kiosk }}{% else %}Either enabled or disabled.{% endif %}</div>
         </div>

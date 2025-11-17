@@ -4,8 +4,8 @@
 
 {% block content %}
     <div class="content">
-      <p>The WiFi network is at the heart of the Hotspot, it is how Hotspot <em>clients</em> access it.
-      <br />Changes here require a restart of the Hotspot and will disconnect you from it.</p>
+      <p class="col-lg-8">The WiFi network is at the heart of the Hotspot, it is how Hotspot <em>clients</em> access it.</p>
+      <p class="col-lg-8">Changes here require a restart of the device and will disconnect you from it.</p>
 
       <form method="POST" class="needs-validation" novalidate>
         {% if errors.all %}<p class="all-error">{{ errors.all }}</p>{% endif %}
@@ -109,25 +109,6 @@
       removeClass(block, className);
     }
   }
-  // function onResetButtonClicked(el, evt) {
-  //   evt.preventDefault();
-  //   el.form.reset();
-  //   hidePassphraseOnOpenWifi();
-  //   const fields = el.form.querySelectorAll('.changed');
-  //   Array.from(fields).forEach(field => {
-  //     removeClass(field, 'changed');
-  //   });
-  // }
-  // function onChangedField(el, evt) {
-  //   addClass(el, 'changed')
-  // }
-  // function manuallyValidateFormOnSubmit(form, event) {
-  //   if (!form.checkValidity()) {
-  //     event.preventDefault()
-  //     event.stopPropagation()
-  //   }
-  //   addClass(form, 'was-validated');
-  // }
   function run() {
     live('form *', 'change', onChangedField);
     live('form', 'change', hidePassphraseOnOpenWifi);
