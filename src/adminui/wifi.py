@@ -90,7 +90,8 @@ def config_update(
             update_wifi_config(data=data)
             # update context
             context.wifi_profile = data.profile
-            context.wifi_ssid = data.ssid
+            if context.can_change_ssid:
+                context.wifi_ssid = data.ssid
             context.wifi_passphrase = None if data.open else data.passphrase
         except Exception as exc:
             logger.error(f"failed to record WiFi conf: {exc}")

@@ -19,6 +19,11 @@ Missing = MissingType()  # single value used to check if its missing
 
 
 @dataclass
+class Capabilities:
+    change_ssid: bool = False
+
+
+@dataclass
 class ComposeData:
     """useful information read from compose.yaml"""
 
@@ -58,6 +63,13 @@ def get_from_compose() -> ComposeData:
             kiwix_prefix = svc_name.split(":", 1)[0]
 
     return ComposeData(tld=tld, domain=domain, kiwix_prefix=kiwix_prefix)
+
+
+def get_capabilities_from_config() -> Capabilities:
+    yaml_config = read_offspot_conf()
+    cap = yaml_config.get("capabilities", {})
+    # only SSID change ATM
+    return Capabilities(change_ssid=cap.get("change_ssid"))
 
 
 def get_wifi_conf_from_offspot_yaml() -> WifiConf:
@@ -104,6 +116,9 @@ def prepare_context():
     # read tld, domain, prefixes from compose
     compose_data = get_from_compose()
 
+    # read capabilities
+    capabilities = get_capabilities_from_config()
+
     # read wifi conf from offspot.yaml if present
     wifi_conf = get_wifi_conf_from_offspot_yaml()
     if not wifi_conf.is_complete:
@@ -120,6 +135,7 @@ def prepare_context():
         tld=compose_data.tld,
         domain=compose_data.domain,
         kiwix_prefix=compose_data.kiwix_prefix,
+        can_change_ssid=capabilities.change_ssid,
         wifi_profile=wifi_conf.profile,
         wifi_ssid=wifi_conf.ssid,
         wifi_passphrase=wifi_conf.passphrase,

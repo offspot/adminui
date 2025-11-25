@@ -20,6 +20,10 @@ class Context:
     # contentfilter_prefix: str = "contentfilter"
     # filemanager_prefix: str = "resources"
 
+    # capabilities are restrictions on an hotspot
+    # regarding edit features of the adminUI
+    can_change_ssid: bool = False
+
     wifi_ssid: str = "Kiwix Hotspot"
     wifi_passphrase: str | None = None
     wifi_profile: str = "perf"
