@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 from offspot_config.utils.yaml import yaml_load
 
-from adminui.constants import DOCKER_COMPOSE_PATH, HOSTAPD_CONF_PATH
+from adminui.constants import DOCKER_COMPOSE_PATH, HOSTAPD_CONF_PATH, logger
 from adminui.context import Context
 from adminui.hostbridge import bridge
 from adminui.utils import read_offspot_conf
@@ -32,6 +32,11 @@ class ComposeData:
 
     kiwix_prefix: str = "browse"
 
+    has_clock: bool = False
+    has_filemanager: bool = False
+    has_zimmanager: bool = False
+    has_metrics: bool = False
+
 
 @dataclass
 class WifiConf:
@@ -57,29 +62,61 @@ def get_from_compose() -> ComposeData:
     svc_names = compose["services"]["reverse-proxy"]["environment"]["SERVICES"].split(
         ","
     )
+
+    has_clock = has_filemanager = has_zimmanager = has_metrics = False
     kiwix_prefix = "kiwix"
     for svc_name in svc_names:
-        if svc_name.endswith(":kiwix"):
+        svc_id = svc_name.rsplit(":", 1)[-1]
+        if svc_id == "kiwix":
             kiwix_prefix = svc_name.split(":", 1)[0]
 
-    return ComposeData(tld=tld, domain=domain, kiwix_prefix=kiwix_prefix)
+        if svc_id == "hwclock":
+            has_clock = True
+        if svc_id == "zim-manager":
+            has_zimmanager = True
+        if svc_id == "resources":
+            has_filemanager = True
+        if svc_id == "metrics":
+            has_metrics = True
+
+    return ComposeData(
+        tld=tld,
+        domain=domain,
+        kiwix_prefix=kiwix_prefix,
+        has_clock=has_clock,
+        has_zimmanager=has_zimmanager,
+        has_filemanager=has_filemanager,
+        has_metrics=has_metrics,
+    )
 
 
 def get_capabilities_from_config() -> Capabilities:
-    yaml_config = read_offspot_conf()
-    cap = yaml_config.get("capabilities", {})
-    # only SSID change ATM
-    return Capabilities(change_ssid=cap.get("change_ssid"))
+    capabilities = Capabilities()
+    try:
+        yaml_config = read_offspot_conf()
+    except Exception as exc:
+        logger.error(f"Failed to read capabilities from config: {exc}")
+        logger.exception(exc)
+    else:
+        cap = yaml_config.get("capabilities", {})
+        # only SSID change ATM
+        capabilities.change_ssid = cap.get("change_ssid")
+    return capabilities
 
 
 def get_wifi_conf_from_offspot_yaml() -> WifiConf:
     """read offspot.yaml for updated-not-applied changes to WiFi conf"""
     conf = WifiConf()
-    yaml_config = read_offspot_conf()
-    ap = yaml_config.get("ap", {})
-    conf.profile = ap.get("profile", conf.profile)
-    conf.ssid = ap.get("ssid", conf.ssid)
-    conf.passphrase = ap.get("passphrase", conf.passphrase)
+    try:
+        yaml_config = read_offspot_conf()
+    except Exception as exc:
+        logger.error(f"Failed to read offspot config: {exc}")
+        logger.exception(exc)
+    else:
+        ap = yaml_config.get("ap", {})
+        conf.profile = ap.get("profile", conf.profile)
+        conf.ssid = ap.get("ssid", conf.ssid)
+        conf.passphrase = ap.get("passphrase", conf.passphrase)
     return conf
 
 
@@ -135,6 +172,10 @@ def prepare_context():
         tld=compose_data.tld,
         domain=compose_data.domain,
         kiwix_prefix=compose_data.kiwix_prefix,
+        has_clock=compose_data.has_clock,
+        has_zimmanager=compose_data.has_zimmanager,
+        has_filemanager=compose_data.has_filemanager,
+        has_metrics=compose_data.has_metrics,
         can_change_ssid=capabilities.change_ssid,
         wifi_profile=wifi_conf.profile,
         wifi_ssid=wifi_conf.ssid,

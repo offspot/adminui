@@ -43,11 +43,11 @@
             <div class="field-row mb-2">
               <!-- ^[^!#;+\]/"\t][^+\]/"\t]{0,31}$ -->
               <input class="form-control {% if errors.ssid %} is-invalid{% endif %}" pattern='^[^!#;+\]\/"\t][^+\]\/"\t]{0,31}$' required minlength="1" maxlength="31"  type="text" name="ssid" placeholder="My Network name" value="{{ form.ssid }}" />
-              <div class="invalid-feedback {% if errors.ssid %}display-until-validated{% endif %}">{% if errors.ssid %}{{ errors.ssid }}{% else %}Max 32 chars. Can't start with a symbol. <code>+</code>, <code>]</code>, <code>/</code>, <code>"</code>, <code>\t</code> prohibited.{% endif %}</div>
+              <div class="invalid-feedback {% if errors.ssid %}display-until-validated{% endif %}">{% if errors.ssid %}{{ errors.ssid }}{% else %}Max 32 characters. Can't start with a symbol. <code>+</code>, <code>]</code>, <code>/</code>, <code>"</code>, <code>\t</code> prohibited.{% endif %}</div>
             </div>
 
             <div class="feature-doc">
-              <p>That's the name of your network. It must be at most 32 chars long.</p>
+              <p>That's the name of your network. It must be at most 32 characters long.</p>
             </div>
           </div>
         </div>

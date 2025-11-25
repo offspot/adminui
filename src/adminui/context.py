@@ -31,6 +31,12 @@ class Context:
     sshd_enabled: bool = False
     kiosk_enabled: bool = False
 
+    # links to other services
+    has_clock: bool = False
+    has_filemanager: bool = False
+    has_zimmanager: bool = False
+    has_metrics: bool = False
+
     @property
     def fqdn(self) -> str:
         return f"{self.domain}.{self.tld}"
