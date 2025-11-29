@@ -2,16 +2,15 @@ FROM alpine:3.22
 LABEL org.opencontainers.image.source=https://github.com/offspot/adminui
 
 COPY --from=ghcr.io/astral-sh/uv:0.9.9 /uv /uvx /bin/
-
+RUN apk add --no-cache curl dumb-init yaml git
 COPY pyproject.toml /src/
 WORKDIR /src
 RUN uv sync --no-install-project
 
 ENV STATIC_DIR=/var/www/static
 RUN \
-    apk add --no-cache curl dumb-init yaml \
     # FontAwesome font
-    && mkdir -p ${STATIC_DIR} \
+    mkdir -p ${STATIC_DIR} \
     && curl -L -O https://use.fontawesome.com/releases/v7.1.0/fontawesome-free-7.1.0-web.zip \
         && unzip -o fontawesome-free-7.1.0-web.zip -d ${STATIC_DIR}/ \
         && rm -f fontawesome-free-7.1.0-web.zip \
