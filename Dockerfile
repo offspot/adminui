@@ -2,7 +2,7 @@ FROM alpine:3.22
 LABEL org.opencontainers.image.source=https://github.com/offspot/adminui
 
 COPY --from=ghcr.io/astral-sh/uv:0.9.9 /uv /uvx /bin/
-RUN apk add --no-cache curl dumb-init yaml git
+RUN apk add --no-cache curl dumb-init yaml
 COPY pyproject.toml /src/
 WORKDIR /src
 RUN uv sync --no-install-project
