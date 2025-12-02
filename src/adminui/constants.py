@@ -26,5 +26,5 @@ DOCKER_COMPOSE_PATH = Path(
 )
 HOSTAPD_CONF_PATH = Path(os.getenv("HOSTAPD_CONF_PATH") or "/etc/hostapd/hostapd.conf")
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.DEBUG if bool(os.getenv("DEBUG")) else logging.INFO)
 logger = logging.getLogger("adminui")
