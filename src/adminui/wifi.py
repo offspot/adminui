@@ -13,6 +13,7 @@ from adminui.auth.session import Session
 from adminui.auth.views import login_required
 from adminui.constants import TEMPLATES_DIR, logger
 from adminui.context import Context
+from adminui.setup import get_wifi_conf
 from adminui.utils import (
     ValidateResult,
     read_latest_conf,
@@ -69,8 +70,23 @@ def update_wifi_config(data: WifiFormData):
     save_offspot_conf(config)
 
 
+def ensure_wifi_conf_read():
+    if context.wifi_conf_read:
+        return
+    wifi_conf = get_wifi_conf()
+    if not wifi_conf.is_complete:
+        logger.error(f"Incomplete WiFiConf at runtime: {wifi_conf!s}")
+    context.wifi_profile = str(wifi_conf.profile)
+    context.wifi_ssid = str(wifi_conf.ssid)
+    context.wifi_passphrase = (
+        str(wifi_conf.passphrase) if wifi_conf.passphrase else None
+    )
+    context.wifi_conf_read = True
+
+
 @router.get("/", name="wifi_config")
 def config(request: Request, session: Session = Depends(login_required)) -> Response:
+    ensure_wifi_conf_read()
     return templates.TemplateResponse(
         request=request,
         name="wifi/config.html",
@@ -84,6 +100,7 @@ def config_update(
     data: Annotated[WifiFormData, Form()],
     session: Session = Depends(login_required),
 ) -> Response:
+    ensure_wifi_conf_read()
     is_valid, errors = data.validate()
     if is_valid:
         try:

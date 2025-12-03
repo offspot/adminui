@@ -149,6 +149,15 @@ def complete_wifi_conf_from_hostapd(conf: WifiConf) -> WifiConf:
     return conf
 
 
+def get_wifi_conf() -> WifiConf:
+    # read wifi conf from offspot.yaml if present
+    wifi_conf = get_wifi_conf_from_offspot_yaml()
+    if not wifi_conf.is_complete:
+        # otherwise read from hostapd.conf
+        wifi_conf = complete_wifi_conf_from_hostapd(wifi_conf)
+    return wifi_conf
+
+
 def prepare_context():
     # read tld, domain, prefixes from compose
     compose_data = get_from_compose()
@@ -156,11 +165,11 @@ def prepare_context():
     # read capabilities
     capabilities = get_capabilities_from_config()
 
-    # read wifi conf from offspot.yaml if present
-    wifi_conf = get_wifi_conf_from_offspot_yaml()
-    if not wifi_conf.is_complete:
-        # otherwise read from hostapd.conf
-        wifi_conf = complete_wifi_conf_from_hostapd(wifi_conf)
+    # read wifi conf
+    # /!\ at this stage, hostapd.conf might not exists
+    # and thus conf might be composed of ap: in offspot.yamll or defaults
+    # /!\ it's possible ap: references perf profile but ap.py will switch to coverage
+    wifi_conf = get_wifi_conf()
 
     # request sshd service status from bridge
     try:

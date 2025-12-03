@@ -27,6 +27,7 @@ class Context:
     wifi_ssid: str = "Kiwix Hotspot"
     wifi_passphrase: str | None = None
     wifi_profile: str = "perf"
+    wifi_conf_read: bool = False
 
     sshd_enabled: bool = False
     kiosk_enabled: bool = False

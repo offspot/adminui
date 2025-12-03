@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- WiFi profile not representative on Pi3B (#1)
+
 ### Changed
 
 - Defaulting to INFO log leve unless `DEBUG` ENV is present
