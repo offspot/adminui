@@ -1,11 +1,15 @@
 FROM alpine:3.22
 LABEL org.opencontainers.image.source=https://github.com/offspot/adminui
 
-COPY --from=ghcr.io/astral-sh/uv:0.9.9 /uv /uvx /bin/
-RUN apk add --no-cache curl dumb-init yaml
-COPY pyproject.toml /src/
+RUN apk add --no-cache curl dumb-init yaml python3
+COPY pyproject.toml README.md /src/
 WORKDIR /src
-RUN uv sync --no-install-project
+RUN python3 -m venv .venv \
+    && .venv/bin/pip install -U pip \
+    # fake stub module to install deps via pip
+    && mkdir -p src/adminui \
+    && touch src/adminui/__init__.py \
+    && .venv/bin/pip install -e .
 
 ENV STATIC_DIR=/var/www/static
 RUN \
@@ -32,7 +36,8 @@ COPY src /src/src/
 RUN \
     ls -lh /src/src/adminui/static/ \
     && mv /src/src/adminui/static/*.js /src/src/adminui/static/branding ${STATIC_DIR}/ \
-    && uv sync
+    && .venv/bin/pip install -e . \
+    && rm -rf /root/.cache/pip
 
 EXPOSE 80
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]

@@ -7,7 +7,7 @@ name = "adminui"
 version = "0.1.0"
 description = "Hotspot Admin UI"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.12"
 dependencies = [
     "fastapi[standard]==0.120.1",
     "fastapi-login==1.10.3",

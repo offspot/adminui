@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3]
+
+### Changed
+
+- Using alpine python (3.12) instead of 3.14 from uv (#3)
+
 ## [1.2]
 
 ### Fixed
@@ -13,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Defaulting to INFO log level unless `DEBUG` ENV is present
+- Defaulting to INFO log level unless `DEBUG` ENV is present (#2)
 - Using offspot-config 2.9.0
 
 ## [1.1] - 2025-12-01
