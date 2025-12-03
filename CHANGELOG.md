@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Defaulting to INFO log leve unless `DEBUG` ENV is present
+- Using offspot-config 2.9.0
 
 ## [1.1] - 2025-12-01
 

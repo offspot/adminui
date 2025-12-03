@@ -12,7 +12,7 @@ dependencies = [
     "fastapi[standard]==0.120.1",
     "fastapi-login==1.10.3",
     "httpx==0.28.1", # should be in fastapi
-    "offspot-config==2.8.0",
+    "offspot-config==2.9.0",
 ]
 license = {text = "GPL-3.0-or-later"}
 classifiers = [
