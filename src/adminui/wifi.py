@@ -1,4 +1,4 @@
-from typing import Annotated
+from typing import Annotated, Self
 
 from fastapi import APIRouter, Depends, Form, Request, Response
 from fastapi.templating import Jinja2Templates
@@ -34,8 +34,8 @@ class WifiFormData(BaseModel):
     model_config = {"extra": "forbid"}
 
     @classmethod
-    def ctx_defaults(cls) -> WifiFormData:
-        return WifiFormData(
+    def ctx_defaults(cls) -> Self:
+        return cls(
             profile=context.wifi_profile,
             ssid=context.wifi_ssid,
             open=context.wifi_open,

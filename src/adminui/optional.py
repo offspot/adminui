@@ -1,4 +1,4 @@
-from typing import Annotated
+from typing import Annotated, Self
 
 from fastapi import APIRouter, Depends, Form, Request, Response
 from fastapi.templating import Jinja2Templates
@@ -28,8 +28,8 @@ class OptionalFormData(BaseModel):
     model_config = {"extra": "forbid"}
 
     @classmethod
-    def ctx_defaults(cls) -> OptionalFormData:
-        return OptionalFormData(sshd=context.sshd_enabled, kiosk=context.kiosk_enabled)
+    def ctx_defaults(cls) -> Self:
+        return cls(sshd=context.sshd_enabled, kiosk=context.kiosk_enabled)
 
     def validate(self) -> ValidateResult:
         errors: dict[str, str] = {}
