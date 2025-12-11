@@ -120,17 +120,17 @@
 			<header>
 				<div class="container-sm row m-auto">
 					<div class="offset-md-2 col-md-8">
-						<a class="navbar-brand" href="{{ url_for('home') }}"><img src="{{ url_for('static', path='branding/horizontal-logo-light.png') }}" /></a>
+						<a class="navbar-brand" href="{{ url_for('home').path }}"><img src="{{ url_for('static', path='branding/horizontal-logo-light.png').path }}" /></a>
 					</div>
 				</div>
 			</header>
 			<div class="admin-bar">
 				<div class="container-sm row m-auto">
 					<nav class="col-8 offset-lg-2 col-lg-6">
-						<a href="{{ url_for('home') }}">{% block pagetitle %}Administration Panel{% endblock %}</a>
+						<a href="{{ url_for('home').path }}">{% block pagetitle %}Administration Panel{% endblock %}</a>
 					</nav>
 					<nav class="col-4 col-lg-2 text-end">
-						<a class="disconnect-link" title="Disconnect and return to Hotspot" href="{{ url_for('logout') }}"><span class="d-none d-sm-inline">Disconnect </span><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+						<a class="disconnect-link" title="Disconnect and return to Hotspot" href="{{ url_for('logout').path }}"><span class="d-none d-sm-inline">Disconnect </span><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
 					</nav>
 				</div>
 			</div>

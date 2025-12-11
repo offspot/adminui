@@ -4,11 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>{% block title %}Kiwix Hotspot Admin{% endblock %}</title>
-    <link rel="icon" type="image/png" href="{{ url_for('static', path='branding/square-logo-light.png') }}" media="(prefers-color-scheme:no-preference)">
-    <link rel="stylesheet" href="{{ url_for('static', path='fontawesome-free-7.1.0-web/css/fontawesome.css') }}" >
-    <link rel="stylesheet" href="{{ url_for('static', path='fontawesome-free-7.1.0-web/css/solid.css') }}" >
-    <link rel="stylesheet" href="{{ url_for('static', path='fontawesome-free-7.1.0-web/css/brands.css') }}" >
-    <link href="{{ url_for('static', path='bootstrap-5.3.8-dist/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ url_for('static', path='branding/square-logo-light.png').path }}" media="(prefers-color-scheme:no-preference)">
+    <link rel="stylesheet" href="{{ url_for('static', path='fontawesome-free-7.1.0-web/css/fontawesome.css').path }}" >
+    <link rel="stylesheet" href="{{ url_for('static', path='fontawesome-free-7.1.0-web/css/solid.css').path }}" >
+    <link rel="stylesheet" href="{{ url_for('static', path='fontawesome-free-7.1.0-web/css/brands.css').path }}" >
+    <link href="{{ url_for('static', path='bootstrap-5.3.8-dist/css/bootstrap.min.css').path }}" rel="stylesheet">
     <style type="text/css">
         body {
             background: #161C32;
@@ -28,8 +28,8 @@
         {% block content %}{% endblock %}
     </main>
     {% endblock %}
-    <script src="{{ url_for('static', path='bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ url_for('static', path='admin-dashboard.js') }}"></script>
+    <script src="{{ url_for('static', path='bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js').path }}"></script>
+    <script src="{{ url_for('static', path='admin-dashboard.js').path }}"></script>
     {% block javascript %}
     <script type="text/javascript">
         function run() {}

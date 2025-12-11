@@ -55,12 +55,12 @@ h2 {
 		  	<h2>Configuration options</h2>
 		  </div>
 		  <div class="col-12 offset-xl-1 col-md-8 d-flex flex-row cards">
-				<a href="{{ url_for('wifi_config') }}" class="card">
+				<a href="{{ url_for('wifi_config').path }}" class="card">
 						<h5 class="card-title">WiFi Settings</h5>
 						<p class="card-text">Change the Hotspot's WiFi network settings.</p>
 				</a>
 
-				<a href="{{ url_for('optional_config') }}" class="card">
+				<a href="{{ url_for('optional_config').path }}" class="card">
 						<h5 class="card-title">Optional Features</h5>
 						<p class="card-text">Enable/disable additional features.</p>
 				</a>

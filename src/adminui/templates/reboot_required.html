@@ -50,7 +50,7 @@
     <p>Those <strong>will be applied upon next restart</strong> of the device.</p>
     <h2 class="text-center">Do you want to restart the device now?</h2>
     <form action="{{ url_for('restart') }}" method="POST" class="text-center">
-      <a class="btn btn-secondary mb-1 mb-md-0" href="{{ url_for('logout') }}">Restart later (back to Dashboard)</a>
+      <a class="btn btn-secondary mb-1 mb-md-0" href="{{ url_for('logout').path }}">Restart later (back to Dashboard)</a>
       <button class="btn btn-danger mb-1 mb-md-0 ms-md-2">Restart now <i class="fa-solid fa-power-off"></i></button>
     </form>
     <p class="bd-callout bd-callout-warning">
