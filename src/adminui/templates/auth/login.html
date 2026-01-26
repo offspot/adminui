@@ -86,24 +86,25 @@
 {% endblock %}
 
 {% block javascript %}
-<script>
-    document.querySelectorAll('.password-toggle').forEach(button => {
-        button.addEventListener('click', function () {
-            // Find the input that lives in the same group as this button
-            const input = this.parentElement.querySelector('.password-input');
-            const iconShow = this.querySelector('.icon-show');
-            const iconHide = this.querySelector('.icon-hide');
+<script type="text/javascript">
+    function run() {
+		live('.password-toggle', 'click', function (elem, event) {
+			// Find the input that lives in the same group as this button
+			const input = elem.parentElement.querySelector('.password-input');
+			const iconShow = elem.querySelector('.icon-show');
+			const iconHide = elem.querySelector('.icon-hide');
 
-            if (input.getAttribute('type') === 'password') {
-                input.setAttribute('type', 'text');
-                iconShow.style.display = 'none';
-                iconHide.style.display = 'block';
-            } else {
-                input.setAttribute('type', 'password');
-                iconShow.style.display = 'block';
-                iconHide.style.display = 'none';
-            }
-        });
-    });
+			if (input.getAttribute('type') === 'password') {
+				input.setAttribute('type', 'text');
+				iconShow.style.display = 'none';
+				iconHide.style.display = 'block';
+			} else {
+				input.setAttribute('type', 'password');
+				iconShow.style.display = 'block';
+				iconHide.style.display = 'none';
+			}
+		});
+	}
+</script>
 </script>
 {% endblock %}
