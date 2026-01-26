@@ -1,5 +1,8 @@
 {% extends "raw_base.html" %}
 
+{# import the macro file to use the password function #}
+{% from "macros.html" import password_input %}
+
 {% block theme %}light{% endblock %}
 {% block title %}Sign into Kiwix Admin{% endblock %}
 
@@ -56,6 +59,8 @@
 			--bs-link-hover-color-rgb: 227,130,14;
 			text-decoration: none;
 		}
+
+		.password-toggle, .password-toggle:hover, .password-toggle:focus { border-color: var(--bs-border-color); }
 	</style>
 	{% endblock %}
 
@@ -71,15 +76,35 @@
 						<label class="form-label" for="username">Username</label>
 						<input type="text"  class="form-control{% if is_incorrect %} is-invalid{% endif %}" name="username" placeholder="Usually “admin”" />
 					</div>
-					<div class="mb-3">
-						<label class="form-label" for="password">Password</label>
-						<input type="password" class="form-control{% if is_incorrect %} is-invalid{% endif %}" name="password" aria-describedby="credentialsFeedback">
-						{% if is_incorrect and message_content %}<div id="credentialsFeedback" class="invalid-feedback">{{ message_content }}</div>{% endif %}
-					</div>
+					{{ password_input(name="password", error=message_content if is_incorrect else None) }}
 					<div class="d-flex flex-row-reverse">
 						<input type="submit" class="btn btn-primary" value="Sign-in" />
 					</div>
 			</form>
 		</div>
 		<div class="mt-1 mb-1 p-3"><a class="returnlink" href="http://{{ ctx.fqdn }}"><i class="fa-solid fa-arrow-left"></i> Return to the Hotspot</a></div>
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript">
+    function run() {
+		live('.password-toggle', 'click', function (elem, event) {
+			// Find the input that lives in the same group as this button
+			const input = elem.parentElement.querySelector('.password-input');
+			const iconShow = elem.querySelector('.icon-show');
+			const iconHide = elem.querySelector('.icon-hide');
+
+			if (input.getAttribute('type') === 'password') {
+				input.setAttribute('type', 'text');
+				iconShow.style.display = 'none';
+				iconHide.style.display = 'block';
+			} else {
+				input.setAttribute('type', 'password');
+				iconShow.style.display = 'block';
+				iconHide.style.display = 'none';
+			}
+		});
+	}
+</script>
+</script>
 {% endblock %}

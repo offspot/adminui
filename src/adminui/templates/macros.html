@@ -1,0 +1,20 @@
+{% macro password_input(name, label="Password", placeholder="", error=None) %}
+<div class="mb-3">
+    <label class="form-label" for="{{ name }}">{{ label }}</label>
+    <div class="input-group">
+        <input type="password"
+               class="form-control password-input {% if error %}is-invalid{% endif %}"
+               name="{{ name }}"
+               id="{{ name }}"
+               placeholder="{{ placeholder }}"
+               {% if error %}aria-describedby="{{ name }}Feedback"{% endif %}>
+
+        <button class="btn password-toggle" type="button">
+            {% include "icons/eye.svg" %}
+            {% include "icons/eye-slash.svg" %}
+        </button>
+
+        {% if error %}<div id="{{ name }}Feedback" class="invalid-feedback">{{ error }}</div>{% endif %}
+    </div>
+</div>
+{% endmacro %}
