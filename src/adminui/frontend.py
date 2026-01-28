@@ -28,7 +28,7 @@ def home(request: Request, session: Session = Depends(login_required)) -> Respon
     if context.has_clock:
         links.append(
             Link(
-                url=f"http://clock.{context.fqdn}/",
+                url=f"http://hwclock.{context.fqdn}/",
                 title="Clock",
                 text="Update date and time as seen by the Hotspot.",
             )
