@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Password visibility toggle on login page (dashboard#46)
 
+## Fixed
+
+- Unable to login in on out-of-time systems (#8)
+
 ## [1.3.2] - 2025-12-11
 
 ### Fixed

@@ -65,7 +65,7 @@ def login_auth(
         response.set_cookie(
             key=SESSION_COOKIE_NAME,
             value=str(session.id),
-            expires=session.expire_on,
+            max_age=session.expire_in,
             httponly=True,
         )
         return response

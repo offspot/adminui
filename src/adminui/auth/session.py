@@ -13,6 +13,11 @@ class Session(BaseModel):
     expire_on: datetime.datetime
 
     @property
+    def expire_in(self) -> int:
+        """ nb of seconds from now until expiration"""
+        return int((self.expire_on - get_now()).total_seconds())
+
+    @property
     def is_valid(self) -> bool:
         return self.expire_on > get_now()
 
