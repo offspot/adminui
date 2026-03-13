@@ -8,7 +8,6 @@ from adminui.constants import BRIDGE_SOCKET
 
 # increasing httpx default (5s) as processing on host can be slow on older devices
 DEFAULT_TIMEOUT = Timeout(timeout=20.0)
-LONG_TIMETOUT = Timeout(timeout=60.0)
 
 
 @dataclass
@@ -90,7 +89,8 @@ class Bridge:
         """enable (not start) systemd service"""
         action = "enable" if enable else "disable"
         return self.do_request(
-            path=f"/toggle-service/{action}/{name}", timeout=LONG_TIMETOUT
+            path=f"/toggle-service/{action}/{name}",
+            timeout=Timeout(timeout=20.0, read=60.0),
         )
 
     def request_service_enabled(self, name: str) -> BridgeResponse:
