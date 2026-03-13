@@ -2,8 +2,12 @@ from dataclasses import dataclass
 from http import HTTPStatus
 
 import httpx
+from httpx import Timeout
 
 from adminui.constants import BRIDGE_SOCKET
+
+# increasing httpx default (5s) as processing on host can be slow on older devices
+DEFAULT_TIMEOUT = Timeout(timeout=20.0)
 
 
 @dataclass
@@ -46,9 +50,11 @@ class Bridge:
         # custom transport over UDS
         self.transport = httpx.HTTPTransport(uds=str(BRIDGE_SOCKET))
 
-    def do_request(self, path: str) -> BridgeResponse:
+    def do_request(
+        self, path: str, timeout: Timeout = DEFAULT_TIMEOUT
+    ) -> BridgeResponse:
         try:
-            with httpx.Client(transport=self.transport) as client:
+            with httpx.Client(transport=self.transport, timeout=timeout) as client:
                 response = client.get(f"{self.api_url}{path}")
 
                 if response.status_code != 200:
@@ -82,7 +88,10 @@ class Bridge:
     def request_service_toggle(self, name: str, enable: bool) -> BridgeResponse:
         """enable (not start) systemd service"""
         action = "enable" if enable else "disable"
-        return self.do_request(path=f"/toggle-service/{action}/{name}")
+        return self.do_request(
+            path=f"/toggle-service/{action}/{name}",
+            timeout=Timeout(timeout=20.0, read=60.0),
+        )
 
     def request_service_enabled(self, name: str) -> BridgeResponse:
         return self.do_request(path=f"/service-is-enabled/{name}")
