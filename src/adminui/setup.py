@@ -12,8 +12,6 @@ from adminui.utils import read_offspot_conf
 class MissingType:
     """Custom type for information not found in source (different than None)"""
 
-    ...
-
 
 Missing = MissingType()  # single value used to check if its missing
 
@@ -36,6 +34,7 @@ class ComposeData:
     has_filemanager: bool = False
     has_zimmanager: bool = False
     has_metrics: bool = False
+    has_contentfilter: bool = False
 
 
 @dataclass
@@ -63,7 +62,9 @@ def get_from_compose() -> ComposeData:
         ","
     )
 
-    has_clock = has_filemanager = has_zimmanager = has_metrics = False
+    has_clock = has_filemanager = has_zimmanager = has_metrics = has_contentfilter = (
+        False
+    )
     kiwix_prefix = "kiwix"
     for svc_name in svc_names:
         svc_id = svc_name.rsplit(":", 1)[-1]
@@ -78,6 +79,8 @@ def get_from_compose() -> ComposeData:
             has_filemanager = True
         if svc_id == "metrics":
             has_metrics = True
+        if svc_id == "contentfilter":
+            has_contentfilter = True
 
     return ComposeData(
         tld=tld,
@@ -87,6 +90,7 @@ def get_from_compose() -> ComposeData:
         has_zimmanager=has_zimmanager,
         has_filemanager=has_filemanager,
         has_metrics=has_metrics,
+        has_contentfilter=has_contentfilter,
     )
 
 
@@ -185,6 +189,7 @@ def prepare_context():
         has_zimmanager=compose_data.has_zimmanager,
         has_filemanager=compose_data.has_filemanager,
         has_metrics=compose_data.has_metrics,
+        has_contentfilter=compose_data.has_contentfilter,
         can_change_ssid=capabilities.change_ssid,
         wifi_profile=wifi_conf.profile,
         wifi_ssid=wifi_conf.ssid,

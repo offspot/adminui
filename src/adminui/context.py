@@ -37,6 +37,7 @@ class Context:
     has_filemanager: bool = False
     has_zimmanager: bool = False
     has_metrics: bool = False
+    has_contentfilter: bool = False
 
     @property
     def fqdn(self) -> str:

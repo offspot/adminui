@@ -57,6 +57,14 @@ def home(request: Request, session: Session = Depends(login_required)) -> Respon
                 text="See your Hotspot's usage statistics.",
             )
         )
+    if context.has_contentfilter:
+        links.append(
+            Link(
+                url=f"http://filter.{context.fqdn}/",
+                title="Content filter",
+                text="Prevent specific pages from being accessed by users.",
+            )
+        )
     return templates.TemplateResponse(
         request=request,
         name="home.html",
