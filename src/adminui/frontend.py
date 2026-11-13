@@ -60,7 +60,7 @@ def home(request: Request, session: Session = Depends(login_required)) -> Respon
     if context.has_contentfilter:
         links.append(
             Link(
-                url=f"http://filter.{context.fqdn}/",
+                url=f"http://{context.contentfilter_prefix}.{context.fqdn}/",
                 title="Content filter",
                 text="Prevent specific pages from being accessed by users.",
             )
