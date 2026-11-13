@@ -25,6 +25,13 @@ class Link(BaseModel):
 @router.get("/", name="home")
 def home(request: Request, session: Session = Depends(login_required)) -> Response:
     links: list[Link] = []
+    links.append(
+        Link(
+            url=router.url_path_for("restart_prompt"),
+            title="Restart",
+            text="Restart your device. Required after some operations.",
+        )
+    )
     if context.has_clock:
         links.append(
             Link(
@@ -49,20 +56,20 @@ def home(request: Request, session: Session = Depends(login_required)) -> Respon
                 text="Add, move, delete files visible in File Manager app.",
             )
         )
-    if context.has_metrics:
-        links.append(
-            Link(
-                url=f"http://metrics.{context.fqdn}/",
-                title="Metrics",
-                text="See your Hotspot's usage statistics.",
-            )
-        )
     if context.has_contentfilter:
         links.append(
             Link(
                 url=f"http://{context.contentfilter_prefix}.{context.fqdn}/",
                 title="Content filter",
                 text="Prevent specific pages from being accessed by users.",
+            )
+        )
+    if context.has_metrics:
+        links.append(
+            Link(
+                url=f"http://metrics.{context.fqdn}/",
+                title="Metrics",
+                text="See your Hotspot's usage statistics.",
             )
         )
     return templates.TemplateResponse(
@@ -78,6 +85,15 @@ def redirect_to_home(
 ) -> Response:
     return RedirectResponse(
         url=router.url_path_for("home"), status_code=HTTPStatus.FOUND
+    )
+
+
+@router.get("/restart-prompt", name="restart_prompt")
+def restart_prompt(
+    request: Request, session: Session = Depends(login_required)
+) -> Response:
+    return templates.TemplateResponse(
+        request=request, name="reboot_required.html", context={"ctx": context}
     )
 
 
