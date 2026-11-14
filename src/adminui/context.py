@@ -14,10 +14,11 @@ class Context:
 
     tld: str = "hotspot"
     domain: str = "kiwix"
+    admin_password: str = "admin-password"
 
     kiwix_prefix: str = "browse"
     # zimdl_prefix: str = "zim-download"
-    # contentfilter_prefix: str = "contentfilter"
+    contentfilter_prefix: str = "filter"
     # filemanager_prefix: str = "resources"
 
     # capabilities are restrictions on an hotspot

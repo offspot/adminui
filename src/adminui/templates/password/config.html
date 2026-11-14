@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Password – Admin Panel – Kiwix Hotspot{% endblock %}
+{% block pagetitle %}Password Settings{% endblock %}
+
+{% block content %}
+    <div class="content">
+      <p class="col-lg-8">The Admin Password is used to access this Admin dashboard and all admin tools.<br />
+      It allows making changes to the Hotspot and should not be shared with regular users.</p>
+      <p class="col-lg-8">Changing it requires a restart of the device and will disconnect you from it.</p>
+
+      <form method="POST" class="needs-validation" novalidate>
+        {% if errors.all %}<p class="all-error">{{ errors.all }}</p>{% endif %}
+
+        <div id="password-block" class="row mb-3">
+          <div class="col-12 col-md-2">
+            <label for="value">New Password</label>
+          </div>
+          <div class="col-12 col-md-10">
+            <div class="field-row mb-2">
+              <input class="form-control" id="password-input" type="text" name="value" pattern="^(a-ZAZ0-9){0,31}$" required minlength="1" maxlength="31" value="{{ form.value or '' }}" />
+              <div class="invalid-feedback {% if errors.value %}display-until-validated{% endif %}">{% if errors.value %}{{ errors.value }}{% else %}Max 31 common latin chars and numbers.{% endif %}</div>
+            </div>
+            <div class="feature-doc">
+              <p>Password must be at most 31 alphanumerical characters</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-10 offset-md-2">
+          <input class="btn btn-primary" type="submit" value="Save changes" /> <input type="reset" class="btn btn-secondary" value="Reset" />
+        </div>
+
+      </form>
+    </div>
+{% endblock %}

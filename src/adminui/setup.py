@@ -27,8 +27,10 @@ class ComposeData:
 
     tld: str
     domain: str
+    admin_password: str
 
     kiwix_prefix: str = "browse"
+    contentfilter_prefix: str = "filter"
 
     has_clock: bool = False
     has_filemanager: bool = False
@@ -66,6 +68,8 @@ def get_from_compose() -> ComposeData:
         False
     )
     kiwix_prefix = "kiwix"
+    contentfilter_prefix = "filter"
+    admin_password = ""
     for svc_name in svc_names:
         svc_id = svc_name.rsplit(":", 1)[-1]
         if svc_id == "kiwix":
@@ -81,11 +85,21 @@ def get_from_compose() -> ComposeData:
             has_metrics = True
         if svc_id == "contentfilter":
             has_contentfilter = True
+            contentfilter_prefix = svc_name.split(":", 1)[0]
+
+    # first service defining ADMIN_PASSWORD is considered hoilding proper value
+    for svc in compose["services"].values():
+        passwd = svc.get("environment", {}).get("ADMIN_PASSWORD")
+        if passwd is not None:
+            admin_password = passwd
+            break
 
     return ComposeData(
         tld=tld,
         domain=domain,
+        admin_password=admin_password,
         kiwix_prefix=kiwix_prefix,
+        contentfilter_prefix=contentfilter_prefix,
         has_clock=has_clock,
         has_zimmanager=has_zimmanager,
         has_filemanager=has_filemanager,
@@ -130,13 +144,11 @@ def complete_wifi_conf_from_hostapd(conf: WifiConf) -> WifiConf:
     passphrase_re = re.compile(r"^wpa_passphrase=(?P<value>.+)$")
     lines = HOSTAPD_CONF_PATH.read_text().splitlines()
     for line in lines:
-        if conf.ssid is Missing:
-            if match := ssid_re.match(line):
-                conf.ssid = match.groupdict()["value"]
+        if conf.ssid is Missing and (match := ssid_re.match(line)):
+            conf.ssid = match.groupdict()["value"]
 
-        if conf.passphrase is Missing:
-            if match := passphrase_re.match(line):
-                conf.passphrase = match.groupdict()["value"]
+        if conf.passphrase is Missing and (match := passphrase_re.match(line)):
+            conf.passphrase = match.groupdict()["value"]
 
         if conf.profile is Missing and line.strip() == "hw_mode=g":
             conf.profile = "coverage"
@@ -184,7 +196,9 @@ def prepare_context():
     Context.setup(
         tld=compose_data.tld,
         domain=compose_data.domain,
+        admin_password=compose_data.admin_password,
         kiwix_prefix=compose_data.kiwix_prefix,
+        contentfilter_prefix=compose_data.contentfilter_prefix,
         has_clock=compose_data.has_clock,
         has_zimmanager=compose_data.has_zimmanager,
         has_filemanager=compose_data.has_filemanager,
