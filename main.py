@@ -16,6 +16,7 @@ def create_app(*, debug: bool = True):
     from adminui.auth import RequiresLoginException
     from adminui.auth.views import requires_login_exception_handler
     from adminui.auth.views import router as auth_router
+    from adminui.bootorder import router as bootorder
     from adminui.optional import router as optional_router
     from adminui.password import router as password
     from adminui.wifi import router as wifi_router
@@ -43,6 +44,7 @@ def create_app(*, debug: bool = True):
     app.include_router(router=wifi_router)
     app.include_router(router=optional_router)
     app.include_router(router=password)
+    app.include_router(router=bootorder)
     app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
     return app

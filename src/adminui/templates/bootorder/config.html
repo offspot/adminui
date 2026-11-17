@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Boot Settings – Admin Panel – Kiwix Hotspot{% endblock %}
+{% block pagetitle %}Boot Order{% endblock %}
+
+{% block content %}
+    <div class="content">
+      <p class="col-lg-8">Your device can boot from various media. This is handled in its firmware, not in the Hotspot OS.</p>
+      <p class="col-lg-8 alert alert-warning">Changing the boot order is <strong>not required for normal operations</strong>.<br /><br />
+        Unless <strong>you know what you are doing</strong>, don't touch this setting.<br /><br />
+      <i class="fa-solid fa-triangle-exclamation"></i> This feature will downgrade your firmware version if your device's one is newer.<br />
+    Boot order update requires re-writing firmware from the last one included in Kiwix Hotspot.</p>
+
+      <form method="POST" class="needs-validation" novalidate>
+        {% if errors.all %}<p class="all-error">{{ errors.all }}</p>{% endif %}
+        <div class="row mb-3">
+          <div class="col-12 col-md-2">
+            <label for="value">Boot Order</label>
+          </div>
+
+          <div class="col-12 col-md-10">
+            <div class="field-row mb-2">
+              <select name="value" class="form-select" >
+                {% for optval, optlabel in form.options(ctx.bootorder).items() %}
+                <option value="{{ optval }}" {% if form.value == optval %}selected="selected"{% endif %}>{{ optlabel }}</option>
+                {% endfor %}
+              </select>
+              <div class="invalid-feedback {% if errors.value %}display-until-validated{% endif %}">{% if errors.value %}{{ errors.value }}{% else %}Choose from listed options.{% endif %}</div>
+            </div>
+
+            <div class="feature-doc">
+              <p>You might want to change your boot order to boot from a different media, such as a USB stick to run diagnostics, updates or other systems.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-10 offset-md-2">
+          <input class="btn btn-primary" type="submit" value="Save changes" /> <input type="reset" class="btn btn-secondary" value="Reset" />
+        </div>
+
+      </form>
+    </div>
+{% endblock %}

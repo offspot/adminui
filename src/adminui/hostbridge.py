@@ -8,12 +8,14 @@ from adminui.constants import BRIDGE_SOCKET
 
 # increasing httpx default (5s) as processing on host can be slow on older devices
 DEFAULT_TIMEOUT = Timeout(timeout=20.0)
+EEPROM_TIMEOUT = Timeout(timeout=50.0)
 
 
 @dataclass
 class BridgeResponse:
     succeeded: bool
     enabled: bool | None = None
+    value: str = ""
     call_exception: Exception | None = None
     http_code: HTTPStatus = HTTPStatus.IM_A_TEAPOT
     details: str = ""
@@ -66,6 +68,7 @@ class Bridge:
                     succeeded = response.json().get("success") or False
                     details = response.json().get("details") or ""
                     enabled = response.json().get("enabled")
+                    value = response.json().get("value")
                 except Exception:
                     return BridgeResponse(
                         succeeded=False,
@@ -77,6 +80,7 @@ class Bridge:
                     http_code=HTTPStatus(response.status_code),
                     details=details,
                     enabled=enabled,
+                    value=value,
                 )
         except Exception as exc:
             return BridgeResponse(succeeded=False, call_exception=exc)
@@ -95,6 +99,14 @@ class Bridge:
 
     def request_service_enabled(self, name: str) -> BridgeResponse:
         return self.do_request(path=f"/service-is-enabled/{name}")
+
+    def request_bootorder(self) -> BridgeResponse:
+        return self.do_request(path="/get-bootorder/")
+
+    def request_bootorder_update(self, bootorder: str) -> BridgeResponse:
+        return self.do_request(
+            path=f"/update-bootorder/{bootorder}", timeout=EEPROM_TIMEOUT
+        )
 
 
 bridge = Bridge()

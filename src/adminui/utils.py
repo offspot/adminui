@@ -1,9 +1,10 @@
 import datetime
+import subprocess
 from pathlib import Path
-from typing import Any
+from subprocess import CompletedProcess
+from typing import Any, TypeAlias
 
 from offspot_config.utils.yaml import yaml_dump, yaml_load
-from typing_extensions import TypeAlias
 
 from adminui.constants import LATEST_YAML_PATH, OFFSPOT_YAML_PATH
 
@@ -28,3 +29,14 @@ def read_latest_conf() -> dict[str, Any]:
 
 def save_offspot_conf(conf: dict[str, Any]):
     OFFSPOT_YAML_PATH.write_text("---\n" if not conf else yaml_dump(conf))
+
+
+def run_command(args: list[str]) -> CompletedProcess[str]:
+    ps = subprocess.run(
+        args, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=False
+    )
+    return CompletedProcess(
+        args=ps.args,
+        returncode=ps.returncode,
+        stdout=ps.stdout.strip() if ps.stdout else "",
+    )

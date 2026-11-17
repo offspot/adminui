@@ -19,6 +19,7 @@ Missing = MissingType()  # single value used to check if its missing
 @dataclass
 class Capabilities:
     change_ssid: bool = False
+    change_bootorder: bool = False
 
 
 @dataclass
@@ -117,8 +118,8 @@ def get_capabilities_from_config() -> Capabilities:
         logger.exception(exc)
     else:
         cap = yaml_config.get("capabilities", {})
-        # only SSID change ATM
         capabilities.change_ssid = cap.get("change_ssid")
+        capabilities.change_bootorder = cap.get("change_bootorder")
     return capabilities
 
 
@@ -193,10 +194,17 @@ def prepare_context():
     except Exception:
         sshd_enabled = False
 
+    # request boot-order from bridge
+    try:
+        bootorder = re.sub(r"^BOOT_ORDER=", "", bridge.request_bootorder().value)
+    except Exception:
+        bootorder = Context.bootorder
+
     Context.setup(
         tld=compose_data.tld,
         domain=compose_data.domain,
         admin_password=compose_data.admin_password,
+        bootorder=bootorder,
         kiwix_prefix=compose_data.kiwix_prefix,
         contentfilter_prefix=compose_data.contentfilter_prefix,
         has_clock=compose_data.has_clock,
@@ -205,6 +213,7 @@ def prepare_context():
         has_metrics=compose_data.has_metrics,
         has_contentfilter=compose_data.has_contentfilter,
         can_change_ssid=capabilities.change_ssid,
+        can_change_bootorder=capabilities.change_bootorder,
         wifi_profile=wifi_conf.profile,
         wifi_ssid=wifi_conf.ssid,
         wifi_passphrase=wifi_conf.passphrase,

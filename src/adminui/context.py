@@ -7,7 +7,7 @@ from typing import Any
 @dataclass(kw_only=True)
 class Context:
     # singleton instance
-    _instance: "Context | None" = None
+    _instance: "Context | None" = None  # noqa: UP037
     devel: bool = False
 
     reboot_after_seconds: int = 5
@@ -15,6 +15,7 @@ class Context:
     tld: str = "hotspot"
     domain: str = "kiwix"
     admin_password: str = "admin-password"
+    bootorder: str = "0xf164"
 
     kiwix_prefix: str = "browse"
     # zimdl_prefix: str = "zim-download"
@@ -24,6 +25,8 @@ class Context:
     # capabilities are restrictions on an hotspot
     # regarding edit features of the adminUI
     can_change_ssid: bool = False
+    # ATM we are restricting this feature to H1 only.
+    can_change_bootorder: bool = False
 
     wifi_ssid: str = "Kiwix Hotspot"
     wifi_passphrase: str | None = None
@@ -67,7 +70,7 @@ class Context:
         cls._instance.__post_init__()
 
     @classmethod
-    def get(cls) -> "Context":
+    def get(cls) -> "Context":  # noqa: UP037
         if not cls._instance:
             raise OSError("Uninitialized context")  # pragma: no cover
         return cls._instance

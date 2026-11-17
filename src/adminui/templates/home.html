@@ -9,9 +9,11 @@
 .config-options {
 }
 .cards {
+	flex-flow: row wrap;
 }
 .card {
-	width: 50%;
+	width: calc(50% - 1em);
+	min-width: calc(50% - 1em);
 	--bs-card-bg: #13121c;
 	--bs-card-border-color: #4f535e;
 	padding: 1rem;
@@ -55,20 +57,28 @@ h2 {
 		  	<h2>Configuration options</h2>
 		  </div>
 		  <div class="col-12 offset-xl-1 col-md-8 d-flex flex-row cards">
-				<a href="{{ url_for('wifi_config').path }}" class="card">
-						<h5 class="card-title">WiFi Settings</h5>
-						<p class="card-text">Change the Hotspot's WiFi network settings.</p>
-				</a>
+					<a href="{{ url_for('wifi_config').path }}" class="card">
+							<h5 class="card-title">WiFi Settings</h5>
+							<p class="card-text">Change the Hotspot's WiFi network settings.</p>
+					</a>
 
-				<a href="{{ url_for('password_config').path }}" class="card">
-						<h5 class="card-title">Admin Password</h5>
-						<p class="card-text">Change password to admin tools.</p>
-				</a>
+					<a href="{{ url_for('password_config').path }}" class="card">
+							<h5 class="card-title">Admin Password</h5>
+							<p class="card-text">Change password to admin tools.</p>
+					</a>
+					<br />
 
-				<a href="{{ url_for('optional_config').path }}" class="card">
-						<h5 class="card-title">Optional Features</h5>
-						<p class="card-text">Enable/disable additional features.</p>
-				</a>
+					<a href="{{ url_for('optional_config').path }}" class="card">
+							<h5 class="card-title">Optional Features</h5>
+							<p class="card-text">Enable/disable additional features.</p>
+					</a>
+
+					{% if ctx.can_change_bootorder %}
+					<a href="{{ url_for('bootorder_config').path }}" class="card">
+							<h5 class="card-title">Boot Order</h5>
+							<p class="card-text">Change device's boot order.</p>
+					</a>
+					{% endif %}
   	  		</div>
 		</div>
 
