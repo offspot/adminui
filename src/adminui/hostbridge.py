@@ -108,5 +108,8 @@ class Bridge:
             path=f"/update-bootorder/{bootorder}", timeout=EEPROM_TIMEOUT
         )
 
+    def request_adminpass_update(self, adminpass: str) -> BridgeResponse:
+        return self.do_request(path=f"/update-adminpass/{adminpass}")
+
 
 bridge = Bridge()
